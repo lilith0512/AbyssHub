@@ -1,0 +1,2004 @@
+/* =====================================================
+   ABYSS-HUB – DESIGN SYSTEM
+   ===================================================== */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Evita che l'header copra l'inizio della sezione */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, .logo, .modal-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.03em; /* Rende i titoli più compatti e moderni */
+    text-transform: uppercase; /* Effetto strumentazione di bordo */
+}
+
+body, p, a, .entry, .w-info {
+    font-family: var(--font-body);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+/* Un tocco di classe per i valori numerici (Meteo, Maree, GPS) */
+.big-value, .coord-row strong, .main-temp {
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em; /* Un po' più di respiro per i numeri */
+}
+
+/* --------------------
+   THEME TOKENS
+-------------------- */
+:root {
+  --bg: #050a14;
+  --bg-soft: rgba(255, 255, 255, 0.06);
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #fbbf24;
+  --danger: #dc2626;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --shadow-md: 0 10px 30px rgba(0,0,0,.35);
+
+ 
+  /* ... altre variabili ... */
+  
+  --font-heading: 'Space Grotesk', sans-serif; /* Per un look tech e audace */
+  --font-body: 'Inter', sans-serif;           /* Per la massima leggibilità */
+}
+
+/* LIGHT MODE */
+[data-theme="light"] {
+  --bg:  #f2f8f8;
+  --bg-soft: #ffffff;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --accent: #1e3a8a;
+  --shadow-md: 0 10px 25px rgba(15, 23, 42, .15);
+}
+
+[data-theme="light"] .widget {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    color: var(--text-main);
+}
+
+[data-theme="light"] .entry {
+    background: #f8fafc; /* Grigio leggermente diverso per le righe delle catture */
+    border-left: 4px solid var(--accent);
+    color: var(--text-main);
+}
+
+/* Rendi il pulsante "Aggiungi" più moderno sul chiaro */
+[data-theme="light"] .btn-add-log {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+}
+/* =====================================================
+   BASE
+===================================================== */
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+section {
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+/* HERO */
+.hero {
+    position: relative;
+    height: 100vh; /* Prende tutta l'altezza dello schermo */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Contenitore Video */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fondamentale: copre tutto senza deformarsi */
+}
+
+/* Overlay  */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(0,0,0,0.5) 0%, 
+        rgba(10, 25, 41, 0.7) 100%
+    );
+}
+
+/* Testi Hero */
+.hero-content {
+    text-align: center;
+    z-index: 1;
+    color: white;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    animation: fadeInDown 1.5s ease;
+}
+
+.hero-title span {
+    color: var(--accent); /* giallo #ffca3a */
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* Animazione di ingresso */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Bottoni */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #000;
+}
+
+.btn-secondary {
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #fff;
+    color: #000;
+}
+
+.tide-main {
+    display: flex;
+    align-items: center;      /* Allinea tutto sulla stessa linea orizzontale */
+    justify-content: space-around; /* Distribuisce lo spazio tra stato e valore */
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.value-container {
+    display: flex;
+    align-items: baseline;    /* Allinea il fondo del numero con il fondo della m */
+}
+
+.big-value {
+    font-size: 3rem;          /* Regola la dimensione in base allo spazio */
+    font-weight: 800;
+    line-height: 1;
+}
+
+.unit {
+    font-size: 1.2rem;
+    margin-left: 4px;         /* Distanza minima dal numero */
+    opacity: 0.7;
+}
+
+#tide-status-text {
+    font-weight: bold;
+    font-size: 0.9rem;
+    /* Rimosso display: block se presente */
+}
+
+.emergency-banner {
+  /* Un blu notte molto profondo con un tocco di rosso solo nel bordo */
+  background: #0f172a; 
+  color: #e2e8f0;
+  padding: 10px 0;
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #b91c1c; 
+  position: sticky;
+  top: 70px;
+  z-index: 999;
+}
+
+/* FIX PER MOBILE (Smartphone) */
+@media (max-width: 768px) {
+  .emergency-banner {
+    /* Se su mobile la tua navbar è più bassa/alta, regola questo numero */
+    top: 150px; 
+    
+    /* Riduciamo leggermente il padding per occupare meno spazio verticale */
+    padding: 6px 0;
+    font-size: 0.75rem;
+  }
+  
+  .ticker-content span {
+    padding: 0 30px; /* Riduciamo lo spazio tra le scritte */
+  }
+}
+
+/* Sfumatura ai lati per non affaticare la vista */
+.emergency-banner::before,
+.emergency-banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.emergency-banner::before {
+  left: 0;
+  background: linear-gradient(to right, #0f172a, transparent);
+}
+
+.emergency-banner::after {
+  right: 0;
+  background: linear-gradient(to left, #0f172a, transparent);
+}
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  /* Portiamo il tempo a 45 secondi per renderlo lentissimo e fluido */
+  animation: ticker 45s linear infinite; 
+}
+
+.ticker-content span {
+  padding: 0 60px;
+  opacity: 0.9;
+}
+
+/* Colore rosso solo per i simboli di allerta */
+.ticker-content span strong {
+  color: #ef4444;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.logo span { color: var(--text); }
+
+.main-nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.main-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+}
+
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--accent);
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+  text-align: center;
+  max-width: 900px;
+  margin: auto;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+}
+
+.hero p {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tide-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tide-icon-state {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Animazione freccia marea */
+
+.tide-direction {
+    display: inline-block; /* Fondamentale per far funzionare la rotazione */
+    animation: pulseOpacity 2s infinite;
+    transition: transform 0.5s ease; /* Rende la rotazione fluida */
+}
+
+@keyframes pulseOpacity {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Grafico dell'onda */
+.tide-graph {
+    position: relative;
+    height: 40px;
+    background: rgba(0, 122, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.tide-wave-bg {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+    animation: waveMove 8s linear infinite;
+}
+
+.tide-indicator {
+    position: absolute;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #ff4d4d; /* Indicatore ora attuale */
+    box-shadow: 0 0 10px #ff4d4d;
+    z-index: 2;
+}
+
+@keyframes waveMove {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+
+.tide-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.detail-item span {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-bottom: 3px;
+}
+
+/* FIX LIGHT MODE */
+[data-theme="light"] .tide-details {
+    background: #f1f5f9;
+}
+
+.widget {
+  background: var(--bg-soft);
+  width: 100%;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  transition: all 0.3s ease;
+}
+
+.widget:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.big-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  display: block;
+  color: var(--text);
+}
+
+.diary-widget {
+    background: var(--bg-soft);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+}
+
+#diary-input {
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.diary-logs {
+    margin-top: 15px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+}
+
+.log-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-left: 3px solid var(--accent);
+}
+
+/* Badge di stato */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.status-badge.high { background: #22c55e; color: #050a14; }
+
+/* Barra di avanzamento simulata */
+.status-bar {
+  background: rgba(255,255,255,0.1);
+  height: 6px;
+  border-radius: 10px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+.bar-fill {
+  background: var(--accent);
+  height: 100%;
+  transition: width 1s ease;
+}
+
+/* COMMUNITY */
+
+.community {
+    position: relative; 
+}
+
+
+.community-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    gap: 20px;
+    padding: 20px 0;
+    scrollbar-width: none; /* Firefox */
+    scroll-behavior: smooth; /* Scorrimento fluido */
+}
+
+.community-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.community::before,
+.community::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.community::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.community::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+}
+
+/* STILE FRECCE */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+/* Nascondi frecce su mobile dove si usa il pollice */
+@media (max-width: 768px) {
+    .nav-btn { display: none; }
+    .prev { left: 5px; }
+    .next { right: 5px; }
+}
+
+/* LA CARD: Proporzioni fisse per evitare schiacciamenti */
+.spot-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: var(--bg-soft);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    
+    display: flex;
+    flex-direction: column; /* Mette foto sopra e testo sotto */
+    height: 400px;         /* Forza un'altezza uguale per tutte le card */
+    overflow: hidden;
+}
+
+
+
+.spot-img-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+}
+/* FOTO: Risolve il problema "allungato" */
+.spot-img-container {
+    width: 100%;
+    height: 180px; /* Altezza fissa per l'area immagine */
+    position: relative;
+    overflow: hidden;
+}
+
+.spot-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ESSENZIALE: ritaglia l'immagine senza deformarla */
+    object-position: center;
+}
+
+/* CONTENUTO TESTUALE */
+.spot-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+}
+
+.spot-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.spot-location {
+    font-size: 0.8rem;
+    color: var(--accent);
+}
+
+.spot-review {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 8px;
+
+    /* Questi 4 elementi devono stare INSIEME per non dare errore */
+    display: -webkit-box;           /* Attiva il modello box flessibile */
+    -webkit-box-orient: vertical;   /* Definisce l'orientamento verticale */
+    -webkit-line-clamp: 3;          /* Numero massimo di righe visibili */
+    overflow: hidden;    
+    transition: all 0.3s ease;           
+}
+
+@media (hover: hover) {
+    .spot-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .spot-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        z-index: 5;
+    }
+}
+
+.spot-card.expanded {
+    transform: scale(1.05);
+}
+
+.spot-card.expanded .spot-review {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.spot-card.expanded .spot-content {
+    overflow-y: auto;
+}
+
+.spot-card {
+    cursor: pointer;
+}
+
+.spot-review::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.2em;
+    background: linear-gradient(to top, var(--bg-soft), transparent);
+}
+
+/* --- FIX VISIBILITÀ BADGE --- */
+.spot-img-container {
+    position: relative !important; /* Indispensabile per il posizionamento dei figli */
+    overflow: hidden; 
+}
+
+
+
+/* --- STILE BADGE ESCHE --- */
+.bait-badge {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 25 !important; /* Sopra a tutto (immagini e gradienti) */
+    
+    /* Sfondo e Testo */
+    background-color: var(--accent) !important; /* Colore oro/azzurro */
+    color: #000000 !important; /* Testo nero per il massimo contrasto sul giallo */
+    
+    /* Spaziatura e Bordi */
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
+    
+    /* Font */
+    font-family: var(--font-heading);
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    
+    /* Ombra per staccare dallo sfondo della foto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+    pointer-events: none;
+    display: block !important;
+}
+
+/* Se vuoi che in Light Mode il testo sia bianco (perché l'accent è blu) */
+[data-theme="light"] .bait-badge {
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Effetto Glow al passaggio del mouse sulla card */
+.spot-card:hover .bait-badge {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* ====================================
+=================
+   FIX POSIZIONAMENTO BOTTONI (SOS e CHATBOT)
+   ===================================================== */
+
+/* 1. Il tasto SOS sta nell'angolo estremo a destra */
+.sos-button {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50% !important;
+  z-index: 10001 !important; /* Sempre sopra tutto */
+  background: var(--danger);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+/* =====================================================
+   CHATBOT & BUBBLE - CODICE UNIFICATO E CORRETTO
+   ===================================================== */
+
+/* 1. Contenitore principale: Spostato a sinistra del SOS */
+#fish-chatbot {
+  position: fixed !important;
+  bottom: 25px !important;
+  right: 105px !important; /* Spazio per evitare il tasto SOS che sta a 20px */
+  z-index: 10000;
+  width: 60px !important;
+  height: 60px !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* 2. Bottone Giallo (Pesce) */
+#fish-button {
+  width: 60px !important;
+  height: 60px !important;
+  background: #ffb703 !important;
+  border-radius: 50% !important;
+  font-size: 30px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+#fish-button:hover {
+  transform: scale(1.05);
+}
+
+/* 3. Bolla di suggerimento (Fumetto) */
+.chatbot-bubble {
+  position: absolute !important;
+  bottom: 80px !important;  /* Posizionata sopra il bottone */
+  right: 0 !important;
+  background: white !important;
+  color: #0f172a !important;
+  padding: 10px 15px !important;
+  border-radius: 15px !important;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+  width: max-content;
+  max-width: 220px;
+  display: none; /* Gestito dal JS con la classe .show */
+  z-index: 10001;
+}
+
+
+
+/* 4. Finestra della Chat (Pop-up) */
+#chat-window {
+  position: absolute !important;
+  bottom: 80px !important;
+  right: 0 !important;
+  width: 280px !important;
+  height: 380px !important;
+  z-index: 10003 !important;
+  background: #0f172a;
+  color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+}
+
+/* 5. Utility per nascondere */
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeInPop {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* HEADER */
+.chat-header {
+  background: #1e293b;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 15px 15px 0 0;
+}
+
+/* CORPO */
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+/* MESSAGGI */
+.bot-msg {
+  background: #334155;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.user-msg {
+  background: #ffb703;
+  color: black;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+/* BOTTONI */
+.chat-quick {
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chat-quick button {
+  flex: 1 1 45%;
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+/* ======================
+   SOS MODAL
+====================== */
+
+.sos-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s ease;
+  z-index: 2000;
+}
+
+.sos-modal.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.sos-modal-content {
+  background: var(--bg);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  width: min(90%, 380px);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  animation: scaleIn .3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.coords-output {
+  margin: 1rem 0;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.sos-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-cancel,
+.btn-confirm {
+  padding: .6rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-cancel {
+  background: #475569;
+  color: #fff;
+}
+
+.btn-confirm {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ======================
+   COMPASS
+====================== */
+
+.compass {
+  width: 120px;
+  height: 120px;
+  border: 4px solid var(--accent);
+  border-radius: 50%;
+  margin: 1rem auto;
+  position: relative;
+}
+
+.needle {
+  position: absolute;
+  width: 4px;
+  height: 50%;
+  background: red;
+  top: 10%;
+  left: 50%;
+  transform-origin: bottom;
+  transform: translateX(-50%) rotate(0deg);
+}
+
+/* ======================
+   MAP
+====================== */
+
+.map-section {
+ padding: 2rem 5%; 
+ position:relative;}
+
+#map {
+  width: 100%;
+  height: 450px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 5;
+  border: 2px solid var(--bg-soft);
+  background-color: #eee;
+  cursor: crosshair; /* Trasforma il mouse in un mirino */
+}
+
+
+
+
+/* ======================
+   RATING STARS
+====================== */
+
+.rating {
+  margin-top: .5rem;
+  color: gold;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+/* Stile per il Diario */
+.log-entries {
+  margin: 10px 0;
+}
+
+.entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.9rem;
+}
+
+.entry-fish { font-weight: 600; color: var(--text); }
+.entry-weight { color: var(--accent); }
+.entry-date { opacity: 0.6; font-size: 0.8rem; }
+
+.btn-add-log {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+/* Stile per il tasto elimina */
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 0 5px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.entry {
+    display: flex;
+    align-items: center; /* Allinea la X con il testo */
+}
+
+/* Ottimizzazione per dita (Mobile) */
+@media (max-width: 768px) {
+    .delete-btn {
+        padding: 10px; /* Più facile da premere */
+        font-size: 1.2rem;
+        margin-left: 5px;
+    }
+    
+    .entry {
+        padding: 12px; /* Rende la riga più alta e leggibile */
+    }
+}
+
+/* Stile per la Luna - Versione Icona Dinamica */
+.moon-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(20, 20, 40, 0.6), rgba(0, 0, 0, 0.3));
+    border-radius: 12px;
+    min-height: 100px;
+}
+
+/* Stile per l'icona che sostituisce l'immagine */
+#moon-main-icon {
+    font-size: 3.2rem;
+    color: #f1f1f1;
+    /* Bagliore lunare applicato all'icona */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+    transition: all 0.5s ease;
+}
+
+.moon-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.moon-info span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.moon-info strong {
+    font-size: 1.8rem;
+    margin: 5px 0;
+    color: #fff;
+}
+
+.moon-info small {
+    font-size: 0.75rem;
+    font-style: italic;
+    opacity: 0.8;
+    color: #ddd;
+    max-width: 130px; 
+    line-height: 1.2;
+}
+
+/* Effetto speciale per quando la luna è piena */
+.moon-full {
+    color: #fff !important;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.9)) !important;
+}
+
+
+/* CHECKLIST MINI - VERSIONE AD ALTA LEGGIBILITÀ */
+.checklist-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 5px;
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: opacity 0.3s;
+}
+
+.check-item input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent); /* Usa il tuo giallo/azzurro */
+    cursor: pointer;
+}
+
+/* Effetto quando completato */
+.check-item input:checked + span + label, 
+.check-item input:checked ~ text {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.ready-feedback {
+    margin-top: 15px;
+    padding: 10px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    animation: slideIn 0.4s ease-out, pulse 2s infinite;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 202, 58, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 202, 58, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 202, 58, 0); }
+}
+
+#ready-screen {
+    animation: fadeIn 0.5s ease-in-out;
+}
+#ready-screen h2 {
+    text-shadow: 0 0 15px var(--accent);
+    letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.checklist-content {
+    min-height: 180px; /* Mantiene il widget della stessa altezza per non far saltare il layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* Sfondo dinamico per la dashboard */
+#dashboard {
+  background: radial-gradient(circle at top right, rgba(0, 242, 255, 0.05), transparent),
+              radial-gradient(circle at bottom left, rgba(255, 183, 3, 0.05), transparent);
+}
+
+.widget {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), 0 10px 20px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effetto riflesso che passa sopra il widget */
+.widget::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.03);
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+.spot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.spot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+
+.spot-item:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.spot-info strong {
+  display: block;
+  font-size: 1.1rem; /* Scritta grande */
+  color: var(--text);
+}
+
+.spot-info small {
+  font-size: 0.9rem; /* Sottotitolo leggibile */
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+/* Badge di stato colorati */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-badge.high { background: #22c55e; color: #050a14; } /* Verde */
+.status-badge.mid { background: #ffb703; color: #050a14; }  /* Giallo */
+.status-badge.low { background: #ef4444; color: #fff; }     /* Rosso */
+
+@media (max-width: 768px) {
+  /* 1. Navbar: la rendiamo più compatta o a colonna */
+  .main-nav ul {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  /* 2. Mappa: riduciamo l'altezza su mobile */
+  #map {
+    height: 300px !important;
+  }
+
+  /* 3. Chatbot e SOS: li rendiamo leggermente più piccoli per non coprire tutto */
+  #fish-button, .sos-button {
+    width: 55px !important;
+    height: 55px !important;
+    font-size: 24px !important;
+  }
+
+  #fish-chatbot {
+    right: 90px !important; /* Avviciniamo il pesce al tasto SOS */
+  }
+}
+
+.chat-quick {
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.menu-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-btn:hover {
+    background: var(--accent);
+    color: black;
+}
+
+.bot-msg, .user-msg {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 85%;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.bot-msg { background: #2a2a2a; align-self: flex-start; }
+.user-msg { background: var(--accent); color: black; align-self: flex-end; margin-left: auto; }
+
+
+
+/* --- IL WIDGET PADRE --- */
+.widget.logbook {
+    display: flex;
+    flex-direction: column;
+    height: 310px !important; /* Blocca l'altezza totale del widget */
+    overflow: hidden;
+}
+
+/* --- IL CONTENITORE DELLE RIGHE --- */
+.log-entries {
+    height: 165px !important; /* Altezza perfetta per 3 catture */
+    overflow-y: auto !important; /* Forza la comparsa dello scroll */
+    overflow-x: hidden;
+    padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+/* --- LA SINGOLA RIGA (ENTRY) --- */
+.entry {
+    height: 48px !important; /* Altezza fissa per ogni riga */
+    min-height: 48px !important;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distanzia Fish, Weight e Date */
+    padding: 0 12px;
+    flex-shrink: 0; /* Impedisce alle righe di schiacciarsi */
+}
+
+
+
+
+/* --- STILE LOG-ENTRIES GENERALE --- */
+.log-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+    max-height: 250px; /* Altezza su Desktop */
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* --- FIX SPECIFICO PER MOBILE --- */
+@media (max-width: 768px) {
+    .log-entries {
+        max-height: 180px; /* Più basso su mobile per non occupare tutto lo schermo */
+    }
+
+    .delete-btn {
+        opacity: 1 !important; /* Sempre visibile su mobile */
+        padding: 10px; /* Area di clic più grande per le dita */
+        color: #ff4d4d;
+    }
+    
+    .entry {
+        padding: 8px; /* Più compatto */
+    }
+}
+
+/* --- SCROLLBAR PERSONALIZZATA --- */
+
+
+.log-entries::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+/* Scrollbar sottile per non disturbare la vista */
+.log-entries::-webkit-scrollbar {
+    width: 3px;
+}
+.log-entries::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+/* ATTIVITA PESCI */
+.activity-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Grafico circolare */
+.circular-chart {
+    display: block;
+    margin: 0 auto;
+    max-width: 100px;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 3.8;
+}
+
+.circle {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 3.8;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease;
+}
+
+.percentage {
+    fill: var(--text-main);
+    font-size: 0.5rem;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.activity-label {
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+/* Slot temporali */
+.activity-slots {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.slot {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.slot-title {
+    display: block;
+    font-size: 0.65rem;
+    opacity: 0.7;
+}
+
+.slot-time {
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* Tag Specie */
+.active-species {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.tag {
+    background: var(--accent);
+    color: #000;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* Adattamento Light Mode */
+[data-theme="light"] .circle-bg { stroke: #e2e8f0; }
+[data-theme="light"] .slot { background: #f1f5f9; }
+[data-theme="light"] .tag { color: white; background: var(--accent); }
+
+
+/* METEO MARINO */
+
+
+.weather-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.weather-big-icon {
+    font-size: 3rem;
+    color: #ffca3a; /* Giallo sole */
+    filter: drop-shadow(0 0 10px rgba(255, 202, 58, 0.4));
+}
+
+.main-temp {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    display: block;
+}
+
+.weather-desc {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Griglia 2x2 per i dati tecnici */
+.weather-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.w-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.w-item i {
+    color: var(--accent);
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.w-info span {
+    display: block;
+    font-size: 0.80rem;
+    opacity: 0.6;
+}
+
+.w-info strong {
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+#wind-speed {
+    transition: color 0.5s ease, transform 0.3s ease;
+}
+
+/* FIX LIGHT MODE */
+[data-theme="light"] .w-item {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+}
+
+/* COORDINATE */
+.nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
+
+.coords-display {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.coord-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Courier New', monospace; /* Stile radar */
+}
+
+.coord-row strong {
+    color: var(--accent);
+    font-size: 1.1rem;
+}
+
+.signal-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.signal-bar-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+}
+
+.sig-bar {
+    width: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1px;
+}
+
+.sig-bar.active { background: #4ade80; } /* Verde segnale */
+.sig-bar:nth-child(1) { height: 4px; }
+.sig-bar:nth-child(2) { height: 7px; }
+.sig-bar:nth-child(3) { height: 10px; }
+.sig-bar:nth-child(4) { height: 12px; }
+
+/* =====================================================
+   ABYSS-HUB – FOOTER & MODAL SYSTEM
+   ===================================================== */
+
+.main-footer {
+    background: var(--bg);
+    padding: 60px 20px 30px;
+    border-top: 1px solid var(--border);
+    transition: background 0.3s ease;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* --- LOGO & BRANDING --- */
+.footer-logo h2 {
+    font-family: var(--font-heading);
+    color: var(--text);
+    font-size: 1.5rem;
+}
+
+.footer-logo h2 span {
+    color: var(--accent);
+}
+
+.footer-logo p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* --- NAVIGAZIONE FOOTER --- */
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Effetto al passaggio del mouse (Giallo in Dark, Blu in Light) */
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+/* --- COPYRIGHT & BOTTOM --- */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* --- SISTEMA MODAL (Supporto, Termini, Privacy) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: var(--card-bg);
+    color: var(--text);
+    margin: 8% auto;
+    padding: 40px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: var(--shadow);
+    animation: modalFade 0.4s ease-out;
+}
+
+@keyframes modalFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: var(--text);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: var(--accent);
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* --- FIX SPECIFICO PER LIGHT MODE --- */
+[data-theme="light"] .footer-links a {
+    color: var(--text); /* Testo più scuro in light mode */
+}
+
+[data-theme="light"] .main-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* --- MODAL SYSTEM --- */
+.modal {
+    display: none; /* Nascosto di default */
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.modal-content {
+    background: #0a1929;
+    margin: 10% auto;
+    padding: 40px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    animation: modalFade 0.4s ease;
+}
+
+@keyframes modalFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-modal:hover { color: var(--accent); }
+
+.modal-title {
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.modal-body p {
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+}
+
+.support-form input, .support-form select, .support-form textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgb(226, 82, 82);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-support {
+    width: 100%;
+    background: var(--accent);
+    color: black;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-support:hover {
+    background: #e5b533;
+}
+
+
+/* --- FIX MOBILE (Sotto i 600px) --- */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column; /* Incolonna ID Comandante e Tipo Anomalia */
+        gap: 15px;
+    }
+    
+    .modal-content {
+        padding: 20px; /* Riduce il padding interno per dare più spazio ai campi */
+        width: 95%;    /* Quasi tutta la larghezza dello schermo */
+        margin: 20% auto;
+    }
+}
+
