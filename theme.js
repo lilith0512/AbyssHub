@@ -742,3 +742,21 @@ const updateSpotTemperatures = async () => {
 // Avviamo l'aggiornamento al caricamento della pagina
 document.addEventListener('DOMContentLoaded', updateSpotTemperatures);
 
+document.getElementById('search-btn').onclick = async () => {
+    const city = document.getElementById('city-input').value;
+    const API_KEY = "d75c8167d520bb65477817e62c7f096c";
+    
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+        const data = await response.json();
+        document.getElementById('search-result').innerHTML = `
+            <div class="spot-item" style="margin-top:10px; border-color: #ffcc00;">
+                <strong>${data.name}: ${Math.round(data.main.temp)}°C</strong>
+                <small>Meteo: ${data.weather[0].description}</small>
+            </div>`;
+    } catch (err) {
+        alert("Località non trovata!");
+    }
+};
+
+
