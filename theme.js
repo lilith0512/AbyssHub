@@ -690,4 +690,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// --- 6. INTEGRAZIONE TEMPERATURE REALI SPOTS ---
+const updateSpotTemperatures = async () => {
+    const API_KEY = "d75c8167d520bb65477817e62c7f096c"; 
+    
+    const spots = [
+        { name: "Fiumicino", lat: 41.76, lon: 12.23 },
+        { name: "Anzio", lat: 41.44, lon: 12.62 },
+        { name: "Santa Marinella", lat: 42.03, lon: 11.85 },
+        { name: "Ostia", lat: 41.73, lon: 12.27 }
+    ];
+
+    // Selezioniamo tutti gli "item" degli spot per trovare sia la temperatura che il badge dentro ognuno
+    const spotItems = document.querySelectorAll('.spot-item');
+
+    for (let i = 0; i < spots.length; i++) {
+        try {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${spots[i].lat}&lon=${spots[i].lon}&appid=${API_KEY}&units=metric`);
+            const data = await response.json();
+            
+            // Definiamo le costanti prendendole dal DOM
+            const temp = Math.round(data.main.temp);
+            const tempElement = spotItems[i].querySelector('.spot-temp');
+            const badge = spotItems[i].querySelector('.status-badge');
+
+            if (tempElement && badge) {
+                // 1. Aggiorniamo la temperatura con effetto visivo
+                tempElement.textContent = temp + "°C";
+                tempElement.style.transition = "color 0.5s";
+                tempElement.style.color = "#00ff00"; 
+                setTimeout(() => tempElement.style.color = "#ffcc00", 2000);
+
+                // 2. LOGICA DINAMICA PER IL BADGE
+                if (temp >= 16) {
+                    badge.textContent = "Ottimo";
+                    badge.className = "status-badge high";
+                } else if (temp >= 13) {
+                    badge.textContent = "Buono";
+                    badge.className = "status-badge mid";
+                } else {
+                    badge.textContent = "Scarso";
+                    badge.className = "status-badge low";
+                }
+            }
+        } catch (error) {
+            console.error("Errore recupero meteo per " + spots[i].name, error);
+        }
+    } // Fine del ciclo for
+}; // Fine della funzione
+
+// Avviamo l'aggiornamento al caricamento della pagina
+document.addEventListener('DOMContentLoaded', updateSpotTemperatures);
 
