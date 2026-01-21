@@ -108,148 +108,6 @@ section {
   padding: clamp(2rem, 5vw, 4rem);
 }
 
-/* HERO */
-.hero {
-    position: relative;
-    height: 100vh; /* Prende tutta l'altezza dello schermo */
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-/* Contenitore Video */
-.hero-video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.hero-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Fondamentale: copre tutto senza deformarsi */
-}
-
-/* Overlay  */
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom, 
-        rgba(0,0,0,0.5) 0%, 
-        rgba(10, 25, 41, 0.7) 100%
-    );
-}
-
-/* Testi Hero */
-.hero-content {
-    text-align: center;
-    z-index: 1;
-    color: white;
-    padding: 0 20px;
-}
-
-.hero-title {
-    font-size: 5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-    animation: fadeInDown 1.5s ease;
-}
-
-.hero-title span {
-    color: var(--accent); /* giallo #ffca3a */
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 300;
-    opacity: 0.9;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-}
-
-/* Animazione di ingresso */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Bottoni */
-.hero-btns {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.btn-primary, .btn-secondary {
-    padding: 15px 30px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s;
-}
-
-.btn-primary {
-    background: var(--accent);
-    color: #000;
-}
-
-.btn-secondary {
-    border: 2px solid #fff;
-    color: #fff;
-}
-
-.btn-secondary:hover {
-    background: #fff;
-    color: #000;
-}
-
-.tide-main {
-    display: flex;
-    align-items: center;      /* Allinea tutto sulla stessa linea orizzontale */
-    justify-content: space-around; /* Distribuisce lo spazio tra stato e valore */
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.value-container {
-    display: flex;
-    align-items: baseline;    /* Allinea il fondo del numero con il fondo della m */
-}
-
-.big-value {
-    font-size: 3rem;          /* Regola la dimensione in base allo spazio */
-    font-weight: 800;
-    line-height: 1;
-}
-
-.unit {
-    font-size: 1.2rem;
-    margin-left: 4px;         /* Distanza minima dal numero */
-    opacity: 0.7;
-}
-
-#tide-status-text {
-    font-weight: bold;
-    font-size: 0.9rem;
-    /* Rimosso display: block se presente */
-}
 
 .emergency-banner {
   /* Un blu notte molto profondo con un tocco di rosso solo nel bordo */
@@ -391,23 +249,152 @@ section {
 /* =====================================================
    HERO
 ===================================================== */
-
+/* --- HERO SECTION --- */
 .hero {
-  text-align: center;
-  max-width: 900px;
-  margin: auto;
+    position: relative;
+    height: 100vh; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
 }
 
-.hero h1 {
-  font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+/* Contenitore Video e Sfondo */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
-.hero p {
-  margin-top: 1rem;
-  color: var(--text-muted);
-  font-size: 1.05rem;
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 0.5) 0%, 
+        rgba(10, 25, 41, 0.7) 100%
+    );
+}
+
+/* Contenuto Centrale */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    padding: 0 20px;
+    max-width: 900px; /* Centra il contenuto testuale */
+    margin: auto;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem); /* Dimensione fluida per mobile/desktop */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    animation: fadeInDown 1.5s ease;
+}
+
+.hero-title span {
+    color: var(--accent);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* Sezione Tide (Marea) */
+.tide-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.value-container {
+    display: flex;
+    align-items: baseline;
+}
+
+.big-value {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.unit {
+    font-size: 1.2rem;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+#tide-status-text {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Bottoni */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #000;
+}
+
+.btn-secondary {
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Animazioni */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* =====================================================
    DASHBOARD
 ===================================================== */
@@ -2108,6 +2095,7 @@ section {
         margin: 20% auto;
     }
 }
+
 
 
 
